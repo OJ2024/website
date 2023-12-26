@@ -363,7 +363,8 @@ def fix_and_unpin_wine_versions():
             installer.content = dump_yaml(script)
             installer.save()
 
-    for installer in models.Installer.objects.filter(game__slug="league-of-legends"):
+    # Add game names here that use the Riot Games launcher to ensure the LoL wine version is selected
+    for installer in models.Installer.objects.filter(game__slug__in=("league-of-legends", "legends-of-runeterra")):
         script = load_yaml(installer.content)
         if "wine" not in script:
             script["wine"] = {}
